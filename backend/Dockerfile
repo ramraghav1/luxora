@@ -44,13 +44,16 @@ RUN dotnet restore
 # Copy everything and publish
 COPY . .
 RUN dotnet publish src/ECommerce.Api/ECommerce.Api.csproj -c Release -o /app/publish --no-restore
+RUN dotnet publish src/Database/ECommerce.Database.Migrator/ECommerce.Database.Migrator.csproj -c Release -o /app/migrator --no-restore
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
+COPY --from=build /app/migrator ./migrator
 
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
-ENTRYPOINT ["dotnet", "ECommerce.Api.dll"]
+# Run migrations then start the API
+ENTRYPOINT ["sh", "-c", "dotnet migrator/ECommerce.Database.Migrator.dll && dotnet ECommerce.Api.dll"]
