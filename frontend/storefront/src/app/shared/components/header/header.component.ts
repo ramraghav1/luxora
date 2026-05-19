@@ -13,10 +13,10 @@ import { CartService } from '@core/services/cart.service';
       <div class="header__top-bar">
         <div class="container">
           <span class="header__eco-badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
             </svg>
-            Eco-Friendly & Sustainable
+            Free Shipping on Orders Over $150
           </span>
           <div class="header__top-actions">
             <button class="theme-switcher" (click)="toggleThemeMenu()">
@@ -44,10 +44,7 @@ import { CartService } from '@core/services/cart.service';
       <div class="header__main">
         <div class="container header__content">
           <a routerLink="/" class="header__logo">
-            <svg class="header__logo-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>
-            </svg>
-            <span class="header__logo-text">EcoStore</span>
+            <span class="header__logo-text">LUXORA</span>
           </a>
 
           <nav class="header__nav">
@@ -217,26 +214,25 @@ import { CartService } from '@core/services/cart.service';
       color: var(--color-primary);
     }
 
-    .header__logo-icon {
-      color: var(--color-primary);
-    }
-
     .header__logo-text {
       font-family: var(--font-display);
-      font-size: 1.6rem;
-      font-weight: 700;
+      font-size: 1.7rem;
+      font-weight: 600;
       color: var(--color-primary-dark);
+      letter-spacing: 0.08em;
     }
 
     .header__nav {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
 
       a {
         color: var(--color-text-secondary);
         text-decoration: none;
         font-weight: 500;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
         padding: 0.4rem 0;
         border-bottom: 2px solid transparent;
         transition: all var(--transition-fast);

@@ -18,20 +18,16 @@ import { Product, Category } from '@core/models/product.model';
       <div class="container hero__content">
         <div class="hero__text">
           <span class="hero__badge">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>
-            </svg>
-            Sustainable Living
+            New Season Collection 2026
           </span>
           <h1 class="hero__title">
-            Shop <span class="hero__highlight">Consciously</span>,
-            Live Beautifully
+            Elevate Your <span class="hero__highlight">Style</span>
           </h1>
           <p class="hero__subtitle">
-            Discover our curated collection of eco-friendly products. Every purchase contributes to a greener planet.
+            Discover handcrafted luxury bags designed for the modern individual. Premium materials, timeless design.
           </p>
           <div class="hero__actions">
-            <a routerLink="/products" class="btn btn--primary btn--lg">Shop Now</a>
+            <a routerLink="/products" class="btn btn--primary btn--lg">Explore Collection</a>
             <a routerLink="/products" [queryParams]="{tag: 'new'}" class="btn btn--outline btn--lg">New Arrivals</a>
           </div>
           <div class="hero__stats">
@@ -40,25 +36,25 @@ import { Product, Category } from '@core/models/product.model';
               <span class="hero__stat-label">Happy Customers</span>
             </div>
             <div class="hero__stat">
-              <span class="hero__stat-number">100%</span>
-              <span class="hero__stat-label">Eco-Certified</span>
+              <span class="hero__stat-number">Premium</span>
+              <span class="hero__stat-label">Quality Materials</span>
             </div>
             <div class="hero__stat">
-              <span class="hero__stat-number">2M+</span>
-              <span class="hero__stat-label">Trees Planted</span>
+              <span class="hero__stat-number">Worldwide</span>
+              <span class="hero__stat-label">Free Shipping</span>
             </div>
           </div>
         </div>
         <div class="hero__visual">
           <div class="hero__image-grid">
             <div class="hero__image-card hero__image-card--1">
-              <img src="https://placehold.co/300x400/2d6a4f/ffffff?text=Eco+Products" alt="Eco Products" />
+              <img src="https://picsum.photos/seed/hero1/400/520" alt="Luxury Collection" />
             </div>
             <div class="hero__image-card hero__image-card--2">
-              <img src="https://placehold.co/300x350/40916c/ffffff?text=Sustainable" alt="Sustainable" />
+              <img src="https://picsum.photos/seed/hero2/400/460" alt="Premium Bags" />
             </div>
             <div class="hero__image-card hero__image-card--3">
-              <img src="https://placehold.co/300x300/52b788/ffffff?text=Natural" alt="Natural" />
+              <img src="https://picsum.photos/seed/hero3/400/380" alt="Designer Pieces" />
             </div>
           </div>
         </div>
@@ -69,8 +65,9 @@ import { Product, Category } from '@core/models/product.model';
     <section class="section categories-section">
       <div class="container">
         <div class="section__header">
+          <span class="section__eyebrow">Collections</span>
           <h2 class="section__title">Shop by Category</h2>
-          <p class="section__subtitle">Find exactly what you're looking for</p>
+          <p class="section__subtitle">Curated selections for every occasion</p>
         </div>
         <div class="categories-grid">
           @for (category of categories; track category.id) {
@@ -227,8 +224,9 @@ import { Product, Category } from '@core/models/product.model';
       <div class="container">
         <div class="section__header">
           <div>
-            <h2 class="section__title">Bestsellers</h2>
-            <p class="section__subtitle">Most loved by our community</p>
+            <span class="section__eyebrow">Bestsellers</span>
+            <h2 class="section__title">Most Popular</h2>
+            <p class="section__subtitle">Our most loved pieces, chosen by you</p>
           </div>
           <a routerLink="/products" class="section__view-all">
             Shop All
@@ -249,9 +247,9 @@ import { Product, Category } from '@core/models/product.model';
     /* ===================== HERO ===================== */
     .hero {
       position: relative;
-      padding: 5rem 0;
+      padding: 6rem 0;
       overflow: hidden;
-      min-height: 85vh;
+      min-height: 90vh;
       display: flex;
       align-items: center;
     }
@@ -260,7 +258,7 @@ import { Product, Category } from '@core/models/product.model';
       position: absolute;
       inset: 0;
       background: var(--gradient-hero);
-      opacity: 0.04;
+      opacity: 0.03;
       z-index: 0;
     }
 
@@ -277,39 +275,30 @@ import { Product, Category } from '@core/models/product.model';
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      background: var(--color-primary-100);
-      color: var(--color-primary);
+      padding: 0.6rem 1.2rem;
+      background: transparent;
+      color: var(--color-accent);
+      border: 1px solid var(--color-accent);
       border-radius: var(--radius-full);
-      font-size: 0.82rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
     }
 
     .hero__title {
       font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      line-height: 1.15;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 600;
+      line-height: 1.1;
       color: var(--color-text);
       margin-bottom: 1.5rem;
     }
 
     .hero__highlight {
-      color: var(--color-primary);
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 4px;
-        left: 0;
-        right: 0;
-        height: 8px;
-        background: var(--color-primary-200);
-        opacity: 0.5;
-        border-radius: 4px;
-        z-index: -1;
-      }
+      color: var(--color-accent);
+      font-style: italic;
     }
 
     .hero__subtitle {

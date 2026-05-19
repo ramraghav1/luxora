@@ -55,18 +55,19 @@ import { CartService } from '@core/services/cart.service';
   styles: [`
     .product-card {
       position: relative;
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
       overflow: hidden;
       background: var(--color-surface);
-      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border-light);
       transition: all var(--transition-normal);
 
       &:hover {
         box-shadow: var(--shadow-lg);
-        transform: translateY(-4px);
+        border-color: transparent;
+        transform: translateY(-2px);
 
         .product-card__image {
-          transform: scale(1.05);
+          transform: scale(1.03);
         }
         .product-card__overlay {
           opacity: 1;
@@ -158,22 +159,22 @@ import { CartService } from '@core/services/cart.service';
     }
 
     .product-card__info {
-      padding: 1.2rem;
+      padding: 1.25rem;
     }
 
     .product-card__category {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--color-primary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-accent);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
     }
 
     .product-card__name {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 600;
       color: var(--color-text);
-      margin: 0.3rem 0;
+      margin: 0.4rem 0;
       line-height: 1.3;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -182,9 +183,9 @@ import { CartService } from '@core/services/cart.service';
     }
 
     .product-card__description {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--color-text-muted);
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 0.8rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -199,13 +200,13 @@ import { CartService } from '@core/services/cart.service';
     }
 
     .product-card__price {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--color-primary-dark);
+      color: var(--color-text);
     }
 
     .product-card__original-price {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--color-text-muted);
       text-decoration: line-through;
     }

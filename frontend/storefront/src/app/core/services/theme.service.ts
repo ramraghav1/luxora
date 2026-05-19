@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
-import { Theme, ecoGreenTheme, oceanBlueTheme, sunsetWarmTheme } from '../themes';
+import { Theme, luxuryNoirTheme, ecoGreenTheme, oceanBlueTheme, sunsetWarmTheme } from '../themes';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ export class ThemeService {
   private readonly STORAGE_KEY = 'storefront-theme';
 
   private readonly availableThemes: Theme[] = [
+    luxuryNoirTheme,
     ecoGreenTheme,
     oceanBlueTheme,
     sunsetWarmTheme,
@@ -16,7 +17,7 @@ export class ThemeService {
   private readonly activeThemeName = signal<string>(this.loadSavedTheme());
 
   readonly currentTheme = computed(() =>
-    this.availableThemes.find(t => t.name === this.activeThemeName()) ?? ecoGreenTheme
+    this.availableThemes.find(t => t.name === this.activeThemeName()) ?? luxuryNoirTheme
   );
 
   readonly themes = computed(() => this.availableThemes);
@@ -45,8 +46,8 @@ export class ThemeService {
 
   private loadSavedTheme(): string {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem(this.STORAGE_KEY) ?? 'eco-green';
+      return localStorage.getItem(this.STORAGE_KEY) ?? 'luxury-noir';
     }
-    return 'eco-green';
+    return 'luxury-noir';
   }
 }
