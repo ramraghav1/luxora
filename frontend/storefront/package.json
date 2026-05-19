@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "deploy:cf": "ng build && wrangler pages deploy dist/storefront/browser --project-name=storefront"
   },
   "dependencies": {
     "@angular/animations": "^18.2.0",
