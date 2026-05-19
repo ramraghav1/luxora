@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>ECommerce.Modules.Orders.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ECommerce.Modules.Orders.Domain/ECommerce.Modules.Orders.Domain.csproj" />
+    <ProjectReference Include="../../../ECommerce.SharedKernel/ECommerce.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

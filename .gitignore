@@ -1,0 +1,60 @@
+# .NET
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.nupkg
+*.snupkg
+project.assets.json
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.pfx
+*.publishsettings
+
+# Node / Angular
+node_modules/
+dist/
+tmp/
+out-tsc/
+.angular/
+.sass-cache/
+coverage/
+testem.log
+typings/
+*.js.map
+
+# Angular cache
+.angular/cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Misc
+*.swp
+*.swo
+*~
+*.log
+*.tmp
+*.bak
+
+# nx
+.nx/cache
+.nx/workspace-data
+
+# Environment overrides
+appsettings.Development.json

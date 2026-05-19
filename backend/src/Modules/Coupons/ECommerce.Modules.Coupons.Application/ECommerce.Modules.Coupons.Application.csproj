@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><RootNamespace>ECommerce.Modules.Coupons.Application</RootNamespace></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ECommerce.Modules.Coupons.Domain/ECommerce.Modules.Coupons.Domain.csproj" />
+    <ProjectReference Include="../../../ECommerce.SharedKernel/ECommerce.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

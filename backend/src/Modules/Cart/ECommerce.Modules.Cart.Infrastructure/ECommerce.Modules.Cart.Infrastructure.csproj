@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable><RootNamespace>ECommerce.Modules.Cart.Infrastructure</RootNamespace></PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../ECommerce.Modules.Cart.Domain/ECommerce.Modules.Cart.Domain.csproj" />
+    <ProjectReference Include="../ECommerce.Modules.Cart.Application/ECommerce.Modules.Cart.Application.csproj" />
+    <ProjectReference Include="../../../ECommerce.SharedKernel/ECommerce.SharedKernel.csproj" />
+  </ItemGroup>
+</Project>

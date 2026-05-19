@@ -1,0 +1,171 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{A2000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{B1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orders", "Orders", "{B2000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cart", "Cart", "{B3000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{B4000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{B5000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inventory", "Inventory", "{B6000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reviews", "Reviews", "{B7000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Coupons", "Coupons", "{B8000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{C1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Api", "src\ECommerce.Api\ECommerce.Api.csproj", "{D1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.SharedKernel", "src\ECommerce.SharedKernel\ECommerce.SharedKernel.csproj", "{D2000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Catalog.Domain", "src\Modules\Catalog\ECommerce.Modules.Catalog.Domain\ECommerce.Modules.Catalog.Domain.csproj", "{E1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Catalog.Application", "src\Modules\Catalog\ECommerce.Modules.Catalog.Application\ECommerce.Modules.Catalog.Application.csproj", "{E2000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Catalog.Infrastructure", "src\Modules\Catalog\ECommerce.Modules.Catalog.Infrastructure\ECommerce.Modules.Catalog.Infrastructure.csproj", "{E3000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Catalog.Api", "src\Modules\Catalog\ECommerce.Modules.Catalog.Api\ECommerce.Modules.Catalog.Api.csproj", "{E4000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Orders.Domain", "src\Modules\Orders\ECommerce.Modules.Orders.Domain\ECommerce.Modules.Orders.Domain.csproj", "{F1000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Orders.Application", "src\Modules\Orders\ECommerce.Modules.Orders.Application\ECommerce.Modules.Orders.Application.csproj", "{F2000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Orders.Infrastructure", "src\Modules\Orders\ECommerce.Modules.Orders.Infrastructure\ECommerce.Modules.Orders.Infrastructure.csproj", "{F3000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Orders.Api", "src\Modules\Orders\ECommerce.Modules.Orders.Api\ECommerce.Modules.Orders.Api.csproj", "{F4000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Cart.Domain", "src\Modules\Cart\ECommerce.Modules.Cart.Domain\ECommerce.Modules.Cart.Domain.csproj", "{F5000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Cart.Application", "src\Modules\Cart\ECommerce.Modules.Cart.Application\ECommerce.Modules.Cart.Application.csproj", "{F6000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Cart.Infrastructure", "src\Modules\Cart\ECommerce.Modules.Cart.Infrastructure\ECommerce.Modules.Cart.Infrastructure.csproj", "{F7000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Cart.Api", "src\Modules\Cart\ECommerce.Modules.Cart.Api\ECommerce.Modules.Cart.Api.csproj", "{F8000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Identity.Domain", "src\Modules\Identity\ECommerce.Modules.Identity.Domain\ECommerce.Modules.Identity.Domain.csproj", "{F9000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Identity.Application", "src\Modules\Identity\ECommerce.Modules.Identity.Application\ECommerce.Modules.Identity.Application.csproj", "{FA000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Identity.Infrastructure", "src\Modules\Identity\ECommerce.Modules.Identity.Infrastructure\ECommerce.Modules.Identity.Infrastructure.csproj", "{FB000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Identity.Api", "src\Modules\Identity\ECommerce.Modules.Identity.Api\ECommerce.Modules.Identity.Api.csproj", "{FC000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Payments.Domain", "src\Modules\Payments\ECommerce.Modules.Payments.Domain\ECommerce.Modules.Payments.Domain.csproj", "{FD000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Payments.Application", "src\Modules\Payments\ECommerce.Modules.Payments.Application\ECommerce.Modules.Payments.Application.csproj", "{FE000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Payments.Infrastructure", "src\Modules\Payments\ECommerce.Modules.Payments.Infrastructure\ECommerce.Modules.Payments.Infrastructure.csproj", "{FF000000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Payments.Api", "src\Modules\Payments\ECommerce.Modules.Payments.Api\ECommerce.Modules.Payments.Api.csproj", "{FF100000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Inventory.Domain", "src\Modules\Inventory\ECommerce.Modules.Inventory.Domain\ECommerce.Modules.Inventory.Domain.csproj", "{FF200000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Inventory.Application", "src\Modules\Inventory\ECommerce.Modules.Inventory.Application\ECommerce.Modules.Inventory.Application.csproj", "{FF300000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Inventory.Infrastructure", "src\Modules\Inventory\ECommerce.Modules.Inventory.Infrastructure\ECommerce.Modules.Inventory.Infrastructure.csproj", "{FF400000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Inventory.Api", "src\Modules\Inventory\ECommerce.Modules.Inventory.Api\ECommerce.Modules.Inventory.Api.csproj", "{FF500000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Reviews.Domain", "src\Modules\Reviews\ECommerce.Modules.Reviews.Domain\ECommerce.Modules.Reviews.Domain.csproj", "{FF600000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Reviews.Application", "src\Modules\Reviews\ECommerce.Modules.Reviews.Application\ECommerce.Modules.Reviews.Application.csproj", "{FF700000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Reviews.Infrastructure", "src\Modules\Reviews\ECommerce.Modules.Reviews.Infrastructure\ECommerce.Modules.Reviews.Infrastructure.csproj", "{FF800000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Reviews.Api", "src\Modules\Reviews\ECommerce.Modules.Reviews.Api\ECommerce.Modules.Reviews.Api.csproj", "{FF900000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Coupons.Domain", "src\Modules\Coupons\ECommerce.Modules.Coupons.Domain\ECommerce.Modules.Coupons.Domain.csproj", "{FFA00000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Coupons.Application", "src\Modules\Coupons\ECommerce.Modules.Coupons.Application\ECommerce.Modules.Coupons.Application.csproj", "{FFB00000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Coupons.Infrastructure", "src\Modules\Coupons\ECommerce.Modules.Coupons.Infrastructure\ECommerce.Modules.Coupons.Infrastructure.csproj", "{FFC00000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Modules.Coupons.Api", "src\Modules\Coupons\ECommerce.Modules.Coupons.Api\ECommerce.Modules.Coupons.Api.csproj", "{FFD00000-0000-0000-0000-000000000001}"
+EndProject
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Database.Migrator", "src\Database\ECommerce.Database.Migrator\ECommerce.Database.Migrator.csproj", "{FFE00000-0000-0000-0000-000000000001}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1000000-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1000000-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1000000-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1000000-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B2000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B3000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B4000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B5000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B6000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B7000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{B8000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+		{E1000000-0000-0000-0000-000000000001} = {B1000000-0000-0000-0000-000000000001}
+		{E2000000-0000-0000-0000-000000000001} = {B1000000-0000-0000-0000-000000000001}
+		{E3000000-0000-0000-0000-000000000001} = {B1000000-0000-0000-0000-000000000001}
+		{E4000000-0000-0000-0000-000000000001} = {B1000000-0000-0000-0000-000000000001}
+		{C1000000-0000-0000-0000-000000000001} = {A1000000-0000-0000-0000-000000000001}
+	EndGlobalSection
+EndGlobal
