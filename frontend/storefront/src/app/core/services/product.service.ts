@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, shareReplay } from 'rxjs';
 import { environment } from '@environments/environment';
 import { ApiResponse, PagedResult } from '../models/api-response.model';
 import { Product, ProductQueryParams, Category } from '../models/product.model';
@@ -10,6 +10,8 @@ import { Product, ProductQueryParams, Category } from '../models/product.model';
 })
 export class ProductService {
   private readonly apiUrl = `${environment.apiUrl}/products`;
+  private featuredCache$?: Observable<Product[]>;
+  private slugCache = new Map<string, Observable<Product>>();
 
   constructor(private readonly http: HttpClient) {}
 
@@ -37,13 +39,26 @@ export class ProductService {
   }
 
   getProductBySlug(slug: string): Observable<Product> {
-    return this.http.get<ApiResponse<Product>>(`${this.apiUrl}/slug/${slug}`)
-      .pipe(map(response => response.data));
+    if (!this.slugCache.has(slug)) {
+      const product$ = this.http.get<ApiResponse<Product>>(`${this.apiUrl}/slug/${slug}`)
+        .pipe(
+          map(response => response.data),
+          shareReplay({ bufferSize: 1, refCount: true })
+        );
+      this.slugCache.set(slug, product$);
+    }
+    return this.slugCache.get(slug)!;
   }
 
   getFeaturedProducts(count: number = 8): Observable<Product[]> {
-    return this.http.get<ApiResponse<Product[]>>(`${this.apiUrl}/featured`, {
-      params: new HttpParams().set('count', count.toString())
-    }).pipe(map(response => response.data));
+    if (!this.featuredCache$) {
+      this.featuredCache$ = this.http.get<ApiResponse<Product[]>>(`${this.apiUrl}/featured`, {
+        params: new HttpParams().set('count', count.toString())
+      }).pipe(
+        map(response => response.data),
+        shareReplay({ bufferSize: 1, refCount: true })
+      );
+    }
+    return this.featuredCache$;
   }
 }

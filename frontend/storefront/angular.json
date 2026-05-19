@@ -18,7 +18,8 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.json",
             "assets": [
-              "src/assets"
+              "src/assets",
+              { "glob": "_redirects", "input": "src", "output": "/" }
             ],
             "styles": [
               "src/styles.scss"

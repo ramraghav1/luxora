@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ProductCardComponent } from '@shared/components/product-card/product-card.component';
 import { ProductService } from '@core/services/product.service';
 import { CategoryService } from '@core/services/category.service';
@@ -752,35 +753,18 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
 
   ngOnInit(): void {
-    this.loadNewArrivals();
-    this.loadSaleProducts();
-    this.loadPremiumProducts();
-    this.loadFeaturedProducts();
-    this.loadCategories();
-  }
-
-  private loadNewArrivals(): void {
-    this.productService.getProducts({ pageSize: 4, sortBy: 'createdAt', sortDirection: 'desc' })
-      .subscribe(result => this.newArrivals = result.items);
-  }
-
-  private loadSaleProducts(): void {
-    this.productService.getProducts({ pageSize: 4, sortBy: 'price', sortDirection: 'asc' })
-      .subscribe(result => this.saleProducts = result.items);
-  }
-
-  private loadPremiumProducts(): void {
-    this.productService.getProducts({ pageSize: 3, sortBy: 'price', sortDirection: 'desc' })
-      .subscribe(result => this.premiumProducts = result.items);
-  }
-
-  private loadFeaturedProducts(): void {
-    this.productService.getFeaturedProducts(4)
-      .subscribe(products => this.featuredProducts = products);
-  }
-
-  private loadCategories(): void {
-    this.categoryService.getCategories()
-      .subscribe(categories => this.categories = categories.slice(0, 6));
+    forkJoin({
+      newArrivals: this.productService.getProducts({ pageSize: 4, sortBy: 'createdAt', sortDirection: 'desc' }),
+      saleProducts: this.productService.getProducts({ pageSize: 4, sortBy: 'price', sortDirection: 'asc' }),
+      premiumProducts: this.productService.getProducts({ pageSize: 3, sortBy: 'price', sortDirection: 'desc' }),
+      featured: this.productService.getFeaturedProducts(4),
+      categories: this.categoryService.getCategories()
+    }).subscribe(results => {
+      this.newArrivals = results.newArrivals.items;
+      this.saleProducts = results.saleProducts.items;
+      this.premiumProducts = results.premiumProducts.items;
+      this.featuredProducts = results.featured;
+      this.categories = results.categories.slice(0, 6);
+    });
   }
 }
