@@ -40,6 +40,7 @@ COPY src/Modules/Coupons/ECommerce.Modules.Coupons.Infrastructure/ECommerce.Modu
 COPY src/Database/ECommerce.Database.Migrator/ECommerce.Database.Migrator.csproj src/Database/ECommerce.Database.Migrator/
 
 RUN dotnet restore
+RUN dotnet restore src/Database/ECommerce.Database.Migrator/ECommerce.Database.Migrator.csproj
 
 # Copy everything and publish
 COPY . .
