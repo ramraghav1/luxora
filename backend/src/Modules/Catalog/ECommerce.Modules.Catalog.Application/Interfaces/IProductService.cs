@@ -14,4 +14,5 @@ public interface IProductService
     Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result> ActivateAsync(Guid id, CancellationToken cancellationToken = default);
     Task<Result> DeactivateAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<Result<ProductDto>> UpdateStatusAsync(Guid id, UpdateProductStatusRequest request, CancellationToken cancellationToken = default);
 }

@@ -1,3 +1,5 @@
+using ECommerce.Modules.Catalog.Domain.Enums;
+
 namespace ECommerce.Modules.Catalog.Application.DTOs;
 
 public record ProductQueryParameters
@@ -10,6 +12,7 @@ public record ProductQueryParameters
     public decimal? MaxPrice { get; init; }
     public bool? IsActive { get; init; }
     public bool? IsFeatured { get; init; }
+    public ProductStatus? Status { get; init; }
     public string SortBy { get; init; } = "CreatedAt";
     public string SortDirection { get; init; } = "desc";
 }

@@ -21,6 +21,9 @@ public sealed class ProductRepository : IProductRepository
             .Include(p => p.Category)
             .Include(p => p.Images)
             .Include(p => p.Attributes)
+            .Include(p => p.Media)
+            .Include(p => p.Variants)
+                .ThenInclude(v => v.Product)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -68,6 +71,9 @@ public sealed class ProductRepository : IProductRepository
         if (parameters.IsFeatured.HasValue)
             query = query.Where(p => p.IsFeatured == parameters.IsFeatured.Value);
 
+        if (parameters.Status.HasValue)
+            query = query.Where(p => p.Status == parameters.Status.Value);
+
         // Sorting
         query = parameters.SortBy?.ToLower() switch
         {
@@ -98,6 +104,9 @@ public sealed class ProductRepository : IProductRepository
             .Include(p => p.Category)
             .Include(p => p.Images)
             .Include(p => p.Attributes)
+            .Include(p => p.Media)
+            .Include(p => p.Variants)
+                .ThenInclude(v => v.Product)
             .FirstOrDefaultAsync(p => p.Slug == slug, cancellationToken);
     }
 

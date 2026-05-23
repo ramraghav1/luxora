@@ -10,6 +10,8 @@ public class CatalogDbContext : DbContext, IUnitOfWork
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<ProductImage> ProductImages => Set<ProductImage>();
     public DbSet<ProductAttribute> ProductAttributes => Set<ProductAttribute>();
+    public DbSet<ProductMedia> ProductMedia => Set<ProductMedia>();
+    public DbSet<ProductVariant> ProductVariants => Set<ProductVariant>();
 
     public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options) { }
 

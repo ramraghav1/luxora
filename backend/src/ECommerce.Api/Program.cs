@@ -1,6 +1,7 @@
 using System.Text;
 using ECommerce.Api.Middleware;
 using ECommerce.Modules.Catalog.Infrastructure;
+using ECommerce.Modules.Identity.Infrastructure;
 using ECommerce.Modules.Orders.Infrastructure;
 using ECommerce.Modules.Payments.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,6 +18,7 @@ builder.Host.UseSerilog((context, loggerConfig) =>
 // Controllers (scan all module assemblies)
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(ECommerce.Modules.Catalog.Api.Controllers.ProductsController).Assembly)
+    .AddApplicationPart(typeof(ECommerce.Modules.Identity.Api.Controllers.AuthController).Assembly)
     .AddApplicationPart(typeof(ECommerce.Modules.Orders.Api.Controllers.OrdersController).Assembly)
     .AddApplicationPart(typeof(ECommerce.Modules.Payments.Api.Controllers.PaymentsController).Assembly);
 
@@ -103,6 +105,7 @@ builder.Services.AddCors(options =>
 
 // Register modules
 builder.Services.AddCatalogModule(builder.Configuration);
+builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddOrdersModule(builder.Configuration);
 builder.Services.AddPaymentsModule(builder.Configuration);
 
@@ -111,9 +114,12 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-// Auto-create/migrate database schemas for Orders and Payments
+// Auto-create/migrate database schemas for modules
 using (var scope = app.Services.CreateScope())
 {
+    var identityDb = scope.ServiceProvider.GetRequiredService<ECommerce.Modules.Identity.Infrastructure.Persistence.IdentityDbContext>();
+    await identityDb.Database.EnsureCreatedAsync();
+
     var ordersDb = scope.ServiceProvider.GetRequiredService<ECommerce.Modules.Orders.Infrastructure.Persistence.OrdersDbContext>();
     await ordersDb.Database.EnsureCreatedAsync();
 

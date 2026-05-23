@@ -16,12 +16,16 @@ public static class CatalogMappings
             ShortDescription = product.ShortDescription,
             Price = product.Price,
             CompareAtPrice = product.CompareAtPrice,
+            SalePrice = product.SalePrice,
             Sku = product.Sku,
             CategoryId = product.CategoryId,
             CategoryName = product.Category?.Name ?? string.Empty,
+            Status = product.Status,
             IsActive = product.IsActive,
             IsFeatured = product.IsFeatured,
             MainImageUrl = product.MainImageUrl,
+            Tags = product.Tags,
+            Brand = product.Brand,
             Images = product.Images.Select(i => new ProductImageDto
             {
                 Id = i.Id,
@@ -35,6 +39,27 @@ public static class CatalogMappings
                 Name = a.Name,
                 Value = a.Value
             }).ToList(),
+            Media = product.Media.Select(m => new ProductMediaDto
+            {
+                Id = m.Id,
+                Url = m.Url,
+                Type = m.Type,
+                AltText = m.AltText,
+                ThumbnailUrl = m.ThumbnailUrl,
+                SortOrder = m.SortOrder,
+                IsPrimary = m.IsPrimary
+            }).OrderBy(m => m.SortOrder).ToList(),
+            Variants = product.Variants.Select(v => new ProductVariantDto
+            {
+                Id = v.Id,
+                ProductId = v.ProductId,
+                ProductName = v.Product?.Name ?? string.Empty,
+                ProductImageUrl = v.Product?.MainImageUrl,
+                VariantGroupId = v.VariantGroupId,
+                ColorName = v.ColorName,
+                ColorHex = v.ColorHex,
+                SortOrder = v.SortOrder
+            }).OrderBy(v => v.SortOrder).ToList(),
             CreatedAt = product.CreatedAt,
             UpdatedAt = product.UpdatedAt
         };

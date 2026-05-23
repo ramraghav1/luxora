@@ -2,6 +2,7 @@ using ECommerce.Modules.Catalog.Application.DTOs;
 using ECommerce.Modules.Catalog.Application.Interfaces;
 using ECommerce.Modules.Catalog.Application.Mappings;
 using ECommerce.Modules.Catalog.Domain.Entities;
+using ECommerce.Modules.Catalog.Domain.Enums;
 using ECommerce.SharedKernel.Application;
 
 namespace ECommerce.Modules.Catalog.Application.Services;
@@ -72,12 +73,36 @@ public sealed class ProductService : IProductService
             sku: request.Sku,
             categoryId: request.CategoryId,
             compareAtPrice: request.CompareAtPrice,
+            salePrice: request.SalePrice,
             mainImageUrl: request.MainImageUrl,
-            isFeatured: request.IsFeatured);
+            isFeatured: request.IsFeatured,
+            tags: request.Tags,
+            brand: request.Brand,
+            status: request.Status);
+
+        // Add media
+        foreach (var media in request.Media)
+        {
+            product.AddMedia(ProductMedia.Create(
+                product.Id, media.Url, media.Type, media.AltText, media.ThumbnailUrl, media.SortOrder, media.IsPrimary));
+        }
+
+        // Add attributes
+        foreach (var attr in request.Attributes)
+        {
+            product.AddAttribute(attr.Name, attr.Value);
+        }
+
+        // Add variants (use product's own ID as variantGroupId for the first in a group)
+        var variantGroupId = Guid.NewGuid();
+        foreach (var variant in request.Variants)
+        {
+            product.AddVariant(ProductVariant.Create(
+                variant.ProductId, variantGroupId, variant.ColorName, variant.ColorHex, variant.SortOrder));
+        }
 
         await _productRepository.AddAsync(product, cancellationToken);
 
-        // Re-fetch to include navigation properties
         var created = await _productRepository.GetByIdAsync(product.Id, cancellationToken);
         return Result<ProductDto>.Success(created!.ToDto());
     }
@@ -104,8 +129,38 @@ public sealed class ProductService : IProductService
             sku: request.Sku,
             categoryId: request.CategoryId,
             compareAtPrice: request.CompareAtPrice,
+            salePrice: request.SalePrice,
             mainImageUrl: request.MainImageUrl,
-            isFeatured: request.IsFeatured);
+            isFeatured: request.IsFeatured,
+            tags: request.Tags,
+            brand: request.Brand);
+
+        if (request.Status != product.Status)
+            product.SetStatus(request.Status);
+
+        // Replace media
+        product.ClearMedia();
+        foreach (var media in request.Media)
+        {
+            product.AddMedia(ProductMedia.Create(
+                product.Id, media.Url, media.Type, media.AltText, media.ThumbnailUrl, media.SortOrder, media.IsPrimary));
+        }
+
+        // Replace attributes
+        product.ClearAttributes();
+        foreach (var attr in request.Attributes)
+        {
+            product.AddAttribute(attr.Name, attr.Value);
+        }
+
+        // Replace variants
+        product.ClearVariants();
+        var variantGroupId = product.Variants.FirstOrDefault()?.VariantGroupId ?? Guid.NewGuid();
+        foreach (var variant in request.Variants)
+        {
+            product.AddVariant(ProductVariant.Create(
+                variant.ProductId, variantGroupId, variant.ColorName, variant.ColorHex, variant.SortOrder));
+        }
 
         await _productRepository.UpdateAsync(product, cancellationToken);
 
@@ -143,5 +198,22 @@ public sealed class ProductService : IProductService
         product.Deactivate();
         await _productRepository.UpdateAsync(product, cancellationToken);
         return Result.Success();
+    }
+
+    public async Task<Result<ProductDto>> UpdateStatusAsync(Guid id, UpdateProductStatusRequest request, CancellationToken cancellationToken = default)
+    {
+        var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+        if (product is null)
+            return Result<ProductDto>.Failure("Product not found.");
+
+        if (request.Status == ProductStatus.OnSale && request.SalePrice.HasValue)
+            product.MarkOnSale(request.SalePrice.Value);
+        else
+            product.SetStatus(request.Status);
+
+        await _productRepository.UpdateAsync(product, cancellationToken);
+
+        var updated = await _productRepository.GetByIdAsync(id, cancellationToken);
+        return Result<ProductDto>.Success(updated!.ToDto());
     }
 }

@@ -19,10 +19,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.ShortDescription).HasMaxLength(500).IsRequired();
         builder.Property(p => p.Price).HasPrecision(18, 2).IsRequired();
         builder.Property(p => p.CompareAtPrice).HasPrecision(18, 2);
+        builder.Property(p => p.SalePrice).HasPrecision(18, 2);
         builder.Property(p => p.Sku).HasMaxLength(50).IsRequired();
         builder.Property(p => p.MainImageUrl).HasMaxLength(500);
         builder.Property(p => p.MetaTitle).HasMaxLength(200);
         builder.Property(p => p.MetaDescription).HasMaxLength(500);
+        builder.Property(p => p.Tags).HasMaxLength(1000);
+        builder.Property(p => p.Brand).HasMaxLength(200);
+        builder.Property(p => p.Status).HasConversion<int>().IsRequired();
 
         builder.HasIndex(p => p.Slug).IsUnique();
         builder.HasIndex(p => p.Sku).IsUnique();
@@ -31,8 +35,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasIndex(p => p.IsFeatured);
         builder.HasIndex(p => p.Price);
         builder.HasIndex(p => p.CreatedAt);
-        builder.HasIndex(p => new { p.IsActive, p.CategoryId }); // Composite for filtered queries
-        builder.HasIndex(p => new { p.IsActive, p.IsFeatured }); // Featured products query
+        builder.HasIndex(p => p.Status);
+        builder.HasIndex(p => new { p.IsActive, p.CategoryId });
+        builder.HasIndex(p => new { p.IsActive, p.IsFeatured });
 
         builder.HasOne(p => p.Category)
             .WithMany(c => c.Products)
@@ -47,6 +52,16 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasMany(p => p.Attributes)
             .WithOne()
             .HasForeignKey(a => a.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(p => p.Media)
+            .WithOne()
+            .HasForeignKey(m => m.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(p => p.Variants)
+            .WithOne(v => v.Product)
+            .HasForeignKey(v => v.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

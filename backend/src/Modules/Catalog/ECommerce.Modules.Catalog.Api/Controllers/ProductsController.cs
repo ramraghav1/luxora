@@ -117,4 +117,18 @@ public class ProductsController : ControllerBase
 
         return Ok(ApiResponse.Ok("Product deactivated."));
     }
+
+    [HttpPatch("{id:guid}/status")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateProductStatus(
+        Guid id,
+        [FromBody] UpdateProductStatusRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await _productService.UpdateStatusAsync(id, request, cancellationToken);
+        if (!result.IsSuccess)
+            return BadRequest(ApiResponse.Fail(result.Error!));
+
+        return Ok(ApiResponse<ProductDto>.Ok(result.Value!));
+    }
 }

@@ -19,6 +19,8 @@
   <ItemGroup>
     <ProjectReference Include="../Modules/Catalog/ECommerce.Modules.Catalog.Api/ECommerce.Modules.Catalog.Api.csproj" />
     <ProjectReference Include="../Modules/Catalog/ECommerce.Modules.Catalog.Infrastructure/ECommerce.Modules.Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="../Modules/Identity/ECommerce.Modules.Identity.Api/ECommerce.Modules.Identity.Api.csproj" />
+    <ProjectReference Include="../Modules/Identity/ECommerce.Modules.Identity.Infrastructure/ECommerce.Modules.Identity.Infrastructure.csproj" />
     <ProjectReference Include="../Modules/Orders/ECommerce.Modules.Orders.Api/ECommerce.Modules.Orders.Api.csproj" />
     <ProjectReference Include="../Modules/Orders/ECommerce.Modules.Orders.Infrastructure/ECommerce.Modules.Orders.Infrastructure.csproj" />
     <ProjectReference Include="../Modules/Payments/ECommerce.Modules.Payments.Api/ECommerce.Modules.Payments.Api.csproj" />
