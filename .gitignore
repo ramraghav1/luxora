@@ -59,6 +59,6 @@ Desktop.ini
 # Environment overrides
 appsettings.Development.json
 
-# Uploaded product images (keep folder via .gitkeep, ignore contents)
-backend/src/ECommerce.Api/wwwroot/uploads/**/*
-!backend/src/ECommerce.Api/wwwroot/uploads/**/.gitkeep
+# Uploaded product images: track curated product photos so they ship with deploys,
+# but still ignore OS/editor cruft in the uploads tree.
+backend/src/ECommerce.Api/wwwroot/uploads/**/.DS_Store
