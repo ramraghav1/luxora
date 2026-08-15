@@ -129,6 +129,7 @@ using (var scope = app.Services.CreateScope())
 
 // Middleware pipeline
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseStaticFiles(); // serves wwwroot/uploads/* at /uploads/*
 
 if (app.Environment.IsDevelopment())
 {

@@ -23,7 +23,6 @@ public sealed class ProductRepository : IProductRepository
             .Include(p => p.Attributes)
             .Include(p => p.Media)
             .Include(p => p.Variants)
-                .ThenInclude(v => v.Product)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
@@ -74,18 +73,18 @@ public sealed class ProductRepository : IProductRepository
         if (parameters.Status.HasValue)
             query = query.Where(p => p.Status == parameters.Status.Value);
 
-        // Sorting
+        // Sorting (Id is a stable tiebreaker so paging stays deterministic when timestamps collide)
         query = parameters.SortBy?.ToLower() switch
         {
             "name" => parameters.SortDirection == "asc"
-                ? query.OrderBy(p => p.Name)
-                : query.OrderByDescending(p => p.Name),
+                ? query.OrderBy(p => p.Name).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.Name).ThenBy(p => p.Id),
             "price" => parameters.SortDirection == "asc"
-                ? query.OrderBy(p => p.Price)
-                : query.OrderByDescending(p => p.Price),
+                ? query.OrderBy(p => p.Price).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.Price).ThenBy(p => p.Id),
             _ => parameters.SortDirection == "asc"
-                ? query.OrderBy(p => p.CreatedAt)
-                : query.OrderByDescending(p => p.CreatedAt)
+                ? query.OrderBy(p => p.UpdatedAt).ThenBy(p => p.Id)
+                : query.OrderByDescending(p => p.UpdatedAt).ThenBy(p => p.Id)
         };
 
         var totalCount = await query.CountAsync(cancellationToken);
@@ -106,7 +105,6 @@ public sealed class ProductRepository : IProductRepository
             .Include(p => p.Attributes)
             .Include(p => p.Media)
             .Include(p => p.Variants)
-                .ThenInclude(v => v.Product)
             .FirstOrDefaultAsync(p => p.Slug == slug, cancellationToken);
     }
 

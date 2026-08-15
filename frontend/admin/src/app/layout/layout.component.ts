@@ -13,7 +13,7 @@ import { AdminThemeService } from '../core/services/theme.service';
       <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar__header">
-          <span class="sidebar__brand">LUXORA</span>
+          <span class="sidebar__brand">LuxePouch</span>
           <span class="sidebar__badge">Admin</span>
         </div>
 
@@ -140,7 +140,7 @@ import { AdminThemeService } from '../core/services/theme.service';
 
         <!-- FOOTER -->
         <footer class="footer">
-          <span>&copy; 2026 LUXORA Admin. All rights reserved.</span>
+          <span>&copy; 2026 LuxePouch Admin. All rights reserved.</span>
           <span>v1.0.0</span>
         </footer>
       </div>

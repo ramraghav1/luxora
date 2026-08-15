@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ThemeService } from '@core/services/theme.service';
 import { CartService } from '@core/services/cart.service';
 
 @Component({
@@ -19,23 +18,6 @@ import { CartService } from '@core/services/cart.service';
             Free Shipping on Orders Over $150
           </span>
           <div class="header__top-actions">
-            <button class="theme-switcher" (click)="toggleThemeMenu()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-              </svg>
-            </button>
-            @if (showThemeMenu) {
-              <div class="theme-menu">
-                @for (theme of themeService.themes(); track theme.name) {
-                  <button
-                    class="theme-menu__item"
-                    [class.active]="theme.name === themeService.currentTheme().name"
-                    (click)="selectTheme(theme.name)">
-                    {{ theme.displayName }}
-                  </button>
-                }
-              </div>
-            }
             <a routerLink="/auth/login" class="header__link">Sign In</a>
           </div>
         </div>
@@ -44,7 +26,7 @@ import { CartService } from '@core/services/cart.service';
       <div class="header__main">
         <div class="container header__content">
           <a routerLink="/" class="header__logo">
-            <span class="header__logo-text">LUXORA</span>
+            <span class="header__logo-text">LUXEPOUCH</span>
           </a>
 
           <nav class="header__nav">
@@ -148,51 +130,6 @@ import { CartService } from '@core/services/cart.service';
       opacity: 0.9;
       transition: opacity var(--transition-fast);
       &:hover { opacity: 1; }
-    }
-
-    .theme-switcher {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: var(--radius-full);
-      padding: 0.35rem;
-      cursor: pointer;
-      color: var(--color-text-inverse);
-      display: flex;
-      align-items: center;
-      transition: background var(--transition-fast);
-      &:hover { background: rgba(255,255,255,0.25); }
-    }
-
-    .theme-menu {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-top: 0.5rem;
-      background: var(--color-surface);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      min-width: 160px;
-      z-index: 100;
-    }
-
-    .theme-menu__item {
-      display: block;
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border: none;
-      background: none;
-      text-align: left;
-      color: var(--color-text);
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: background var(--transition-fast);
-      &:hover { background: var(--color-bg-secondary); }
-      &.active { 
-        background: var(--color-primary-50);
-        color: var(--color-primary);
-        font-weight: 600;
-      }
     }
 
     .header__main {
@@ -330,17 +267,6 @@ import { CartService } from '@core/services/cart.service';
   `]
 })
 export class HeaderComponent {
-  readonly themeService = inject(ThemeService);
   readonly cartService = inject(CartService);
   mobileMenuOpen = false;
-  showThemeMenu = false;
-
-  toggleThemeMenu(): void {
-    this.showThemeMenu = !this.showThemeMenu;
-  }
-
-  selectTheme(name: string): void {
-    this.themeService.setTheme(name);
-    this.showThemeMenu = false;
-  }
 }

@@ -12,7 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
     <div class="auth-page">
       <div class="auth-page__visual">
         <div class="auth-page__visual-content">
-          <div class="auth-page__brand">LUXORA</div>
+          <div class="auth-page__brand">LuxePouch</div>
           <h2 class="auth-page__tagline">Admin Portal</h2>
           <p class="auth-page__description">
             Manage your products, orders, and customers from one powerful dashboard.
@@ -44,7 +44,7 @@ import { AuthService } from '../../core/services/auth.service';
                 type="email"
                 class="form-input"
                 formControlName="email"
-                placeholder="admin&#64;luxora.com"
+                placeholder="admin&#64;luxepouch.com"
                 autocomplete="email"
               />
               @if (loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']) {

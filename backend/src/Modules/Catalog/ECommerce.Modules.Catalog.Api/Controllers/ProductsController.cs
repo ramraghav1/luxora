@@ -2,6 +2,8 @@ using ECommerce.Modules.Catalog.Application.DTOs;
 using ECommerce.Modules.Catalog.Application.Interfaces;
 using ECommerce.SharedKernel.Api;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Modules.Catalog.Api.Controllers;
@@ -10,11 +12,17 @@ namespace ECommerce.Modules.Catalog.Api.Controllers;
 [Route("api/products")]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductService _productService;
+    private static readonly string[] AllowedImageContentTypes =
+        ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    private const long MaxImageSizeBytes = 5 * 1024 * 1024;
 
-    public ProductsController(IProductService productService)
+    private readonly IProductService _productService;
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
+    public ProductsController(IProductService productService, IWebHostEnvironment webHostEnvironment)
     {
         _productService = productService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
@@ -53,6 +61,35 @@ public class ProductsController : ControllerBase
     {
         var result = await _productService.GetFeaturedAsync(count, cancellationToken);
         return Ok(ApiResponse<object>.Ok(result.Value!));
+    }
+
+    [HttpPost("images")]
+    [Authorize(Roles = "Admin")]
+    [RequestSizeLimit(MaxImageSizeBytes)]
+    public async Task<IActionResult> UploadImage(IFormFile? file, CancellationToken cancellationToken)
+    {
+        if (file is null || file.Length == 0)
+            return BadRequest(ApiResponse.Fail("No file was provided."));
+
+        if (file.Length > MaxImageSizeBytes)
+            return BadRequest(ApiResponse.Fail("Image must be 5MB or smaller."));
+
+        if (!AllowedImageContentTypes.Contains(file.ContentType))
+            return BadRequest(ApiResponse.Fail("Only JPEG, PNG, WEBP, and GIF images are allowed."));
+
+        var extension = Path.GetExtension(file.FileName);
+        var fileName = $"{Guid.NewGuid()}{extension}";
+        var uploadsDirectory = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "products");
+        Directory.CreateDirectory(uploadsDirectory);
+        var filePath = Path.Combine(uploadsDirectory, fileName);
+
+        await using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await file.CopyToAsync(stream, cancellationToken);
+        }
+
+        var url = $"/uploads/products/{fileName}";
+        return Ok(ApiResponse<UploadImageResponseDto>.Ok(new UploadImageResponseDto(url, fileName, file.Length)));
     }
 
     [HttpPost]

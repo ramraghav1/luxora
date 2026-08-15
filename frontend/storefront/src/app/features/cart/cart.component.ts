@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '@core/services/cart.service';
+import { ResolveImageUrlPipe } from '@shared/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ResolveImageUrlPipe],
   template: `
     <div class="cart-page">
       <div class="container">
@@ -29,7 +30,7 @@ import { CartService } from '@core/services/cart.service';
               @for (item of cartService.items(); track item.productId) {
                 <div class="cart-item">
                   <a [routerLink]="['/products', item.slug]" class="cart-item__image">
-                    <img [src]="item.imageUrl || 'https://placehold.co/120x150/e8f5e9/2d6a4f?text=' + item.productName" [alt]="item.productName">
+                    <img [src]="(item.imageUrl | resolveImageUrl) || 'https://placehold.co/120x150/e8f5e9/2d6a4f?text=' + item.productName" [alt]="item.productName">
                   </a>
                   <div class="cart-item__details">
                     <a [routerLink]="['/products', item.slug]" class="cart-item__name">{{ item.productName }}</a>

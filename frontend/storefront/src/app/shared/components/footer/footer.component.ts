@@ -13,18 +13,18 @@ import { RouterModule } from '@angular/router';
           <div class="footer__grid">
             <div class="footer__brand">
               <div class="footer__logo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M6 8h12l-1 12a2 2 0 01-2 2H9a2 2 0 01-2-2L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/>
                 </svg>
-                <span>EcoStore</span>
+                <span>LUXEPOUCH</span>
               </div>
               <p class="footer__tagline">
-                Sustainable shopping for a better tomorrow. Every purchase plants a seed for the future.
+                Handcrafted bags for the modern individual. Timeless design, premium materials, made to last.
               </p>
               <div class="footer__certifications">
-                <span class="cert-badge">♻️ Carbon Neutral</span>
-                <span class="cert-badge">🌱 Eco Certified</span>
-                <span class="cert-badge">🤝 Fair Trade</span>
+                <span class="cert-badge">✦ Premium Materials</span>
+                <span class="cert-badge">🚚 Free Worldwide Shipping</span>
+                <span class="cert-badge">↺ 30-Day Returns</span>
               </div>
             </div>
 
@@ -54,7 +54,7 @@ import { RouterModule } from '@angular/router';
 
             <div class="footer__newsletter">
               <h4>Stay Connected</h4>
-              <p>Get eco-tips and exclusive offers straight to your inbox.</p>
+              <p>Get styling tips and exclusive offers straight to your inbox.</p>
               <form class="footer__form" (submit)="$event.preventDefault()">
                 <input type="email" placeholder="Enter your email" class="footer__input" />
                 <button type="submit" class="footer__submit-btn">Subscribe</button>
@@ -66,7 +66,7 @@ import { RouterModule } from '@angular/router';
 
       <div class="footer__bottom">
         <div class="container footer__bottom-content">
-          <p>&copy; 2024 EcoStore. All rights reserved. Made with 💚 for the planet.</p>
+          <p>&copy; 2026 LUXEPOUCH. All rights reserved. Crafted with care, worn with pride.</p>
           <div class="footer__bottom-links">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>

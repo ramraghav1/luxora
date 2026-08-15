@@ -6,11 +6,12 @@ import { CartService } from '@core/services/cart.service';
 import { OrderService } from '@core/services/order.service';
 import { PaymentService } from '@core/services/payment.service';
 import { ShippingAddress } from '@core/models/order.model';
+import { ResolveImageUrlPipe } from '@shared/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ResolveImageUrlPipe],
   template: `
     <div class="checkout-page">
       <div class="container">
@@ -131,7 +132,7 @@ import { ShippingAddress } from '@core/models/order.model';
               <div class="summary-items">
                 @for (item of cartService.items(); track item.productId) {
                   <div class="summary-item">
-                    <img [src]="item.imageUrl || 'https://placehold.co/60x60/e8f5e9/2d6a4f?text=Item'" [alt]="item.productName">
+                    <img [src]="(item.imageUrl | resolveImageUrl) || 'https://placehold.co/60x60/e8f5e9/2d6a4f?text=Item'" [alt]="item.productName">
                     <div class="summary-item__info">
                       <span class="summary-item__name">{{ item.productName }}</span>
                       <span class="summary-item__qty">Qty: {{ item.quantity }}</span>

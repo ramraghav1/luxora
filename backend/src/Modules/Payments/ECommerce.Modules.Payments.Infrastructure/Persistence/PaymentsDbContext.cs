@@ -12,6 +12,13 @@ public class PaymentsDbContext : DbContext, IUnitOfWork
 
     public PaymentsDbContext(DbContextOptions<PaymentsDbContext> options) : base(options) { }
 
+    // Migrations create Postgres columns as 'timestamp without time zone'; convert so Npgsql doesn't reject Kind=Utc DateTimes on write while keeping Kind=Utc in app code.
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<DateTime>().HaveColumnType("timestamp without time zone").HaveConversion<UtcDateTimeConverter>();
+        configurationBuilder.Properties<DateTime?>().HaveColumnType("timestamp without time zone").HaveConversion<NullableUtcDateTimeConverter>();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("payments");

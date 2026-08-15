@@ -17,7 +17,7 @@ export class ThemeService {
   private readonly activeThemeName = signal<string>(this.loadSavedTheme());
 
   readonly currentTheme = computed(() =>
-    this.availableThemes.find(t => t.name === this.activeThemeName()) ?? luxuryNoirTheme
+    this.availableThemes.find(t => t.name === this.activeThemeName()) ?? sunsetWarmTheme
   );
 
   readonly themes = computed(() => this.availableThemes);
@@ -46,8 +46,8 @@ export class ThemeService {
 
   private loadSavedTheme(): string {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem(this.STORAGE_KEY) ?? 'luxury-noir';
+      return localStorage.getItem(this.STORAGE_KEY) ?? 'sunset-warm';
     }
-    return 'luxury-noir';
+    return 'sunset-warm';
   }
 }

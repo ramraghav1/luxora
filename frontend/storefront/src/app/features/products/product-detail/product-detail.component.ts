@@ -4,11 +4,12 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil, switchMap } from 'rxjs';
 import { ProductService } from '@core/services/product.service';
 import { Product } from '@core/models/product.model';
+import { ResolveImageUrlPipe } from '@shared/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ResolveImageUrlPipe],
   template: `
     <div class="product-detail" *ngIf="product">
       <div class="container">
@@ -24,12 +25,12 @@ import { Product } from '@core/models/product.model';
         <div class="product-layout">
           <div class="product-gallery">
             <div class="main-image">
-              <img [src]="selectedImage || product.mainImageUrl || 'assets/images/placeholder.png'"
+              <img [src]="(selectedImage | resolveImageUrl) || (product.mainImageUrl | resolveImageUrl) || 'assets/images/placeholder.png'"
                    [alt]="product.name">
             </div>
             <div class="thumbnail-list" *ngIf="product.images.length > 0">
               <img *ngFor="let img of product.images"
-                   [src]="img.url"
+                   [src]="img.url | resolveImageUrl"
                    [alt]="img.altText || product.name"
                    [class.active]="selectedImage === img.url"
                    (click)="selectedImage = img.url"

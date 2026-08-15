@@ -6,11 +6,13 @@ import {
   ProductService, ProductDto, CategoryDto, ProductStatus, MediaType,
   CreateProductRequest, MediaRequest, AttributeRequest, VariantRequest
 } from './product.service';
+import { ImageUploaderComponent } from '../../shared/components/image-uploader/image-uploader.component';
+import { ResolveImageUrlPipe } from '../../core/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ImageUploaderComponent, ResolveImageUrlPipe],
   template: `
     <div class="products">
       <div class="products__header">
@@ -143,14 +145,15 @@ import {
                   <h3 class="card__title">Media Gallery</h3>
                   <button type="button" class="btn btn--ghost btn--xs" (click)="addMedia()">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add
+                    Add empty row
                   </button>
                 </div>
                 <div class="card__body card__body--padded">
+                  <app-image-uploader [multiple]="true" (uploaded)="onMediaImagesUploaded($event)"></app-image-uploader>
                   @if (mediaControls.length === 0) {
-                    <div class="empty-placeholder" (click)="addMedia()">
+                    <div class="empty-placeholder">
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-                      <span>Click to add images or videos</span>
+                      <span>Upload or paste images/videos above</span>
                     </div>
                   }
                   <div class="media-grid">
@@ -158,7 +161,7 @@ import {
                       <div class="media-card" [class.media-card--primary]="media.get('isPrimary')?.value">
                         <div class="media-card__preview">
                           @if (media.get('type')?.value == 0) {
-                            <img [src]="media.get('url')?.value || 'https://placehold.co/200x200/f8f9fa/adb5bd?text=Image'" alt="Media">
+                            <img [src]="(media.get('url')?.value | resolveImageUrl) || 'https://placehold.co/200x200/f8f9fa/adb5bd?text=Image'" alt="Media">
                           } @else {
                             <div class="media-card__video">
                               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
@@ -259,12 +262,13 @@ import {
               <div class="card">
                 <div class="card__header"><h3 class="card__title">Cover Image</h3></div>
                 <div class="card__body card__body--padded">
-                  <div class="form-field">
-                    <input class="form-field__input" type="text" formControlName="mainImageUrl" placeholder="Paste image URL here...">
-                  </div>
+                  <app-image-uploader (uploaded)="onCoverImageUploaded($event)"></app-image-uploader>
                   @if (form.get('mainImageUrl')?.value) {
                     <div class="cover-preview">
-                      <img [src]="form.get('mainImageUrl')?.value" alt="Cover">
+                      <img [src]="form.get('mainImageUrl')?.value | resolveImageUrl" alt="Cover">
+                      <button type="button" class="cover-preview__remove" (click)="clearCoverImage()" title="Remove">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      </button>
                     </div>
                   } @else {
                     <div class="cover-preview cover-preview--empty">
@@ -486,12 +490,18 @@ import {
     }
     .variant-item__fields { flex: 1; display: flex; flex-direction: column; gap: 0.35rem; }
 
-    .cover-preview { border-radius: var(--radius-md); overflow: hidden; margin-top: 0.5rem; }
+    .cover-preview { position: relative; border-radius: var(--radius-md); overflow: hidden; margin-top: 0.5rem; }
     .cover-preview img { width: 100%; height: 160px; object-fit: cover; display: block; }
     .cover-preview--empty {
       height: 120px; background: var(--content-bg);
       display: flex; align-items: center; justify-content: center; color: var(--text-muted);
     }
+    .cover-preview__remove {
+      position: absolute; top: 0.4rem; right: 0.4rem; width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center; border: none; border-radius: 50%;
+      background: rgba(0, 0, 0, 0.55); color: #fff; cursor: pointer; transition: background 0.15s;
+    }
+    .cover-preview__remove:hover { background: rgba(0, 0, 0, 0.75); }
 
     @media (max-width: 1100px) { .form-layout__grid { grid-template-columns: 1fr; } }
     @media (max-width: 768px) { .media-grid { grid-template-columns: 1fr; } .form-field__row { flex-direction: column; } }
@@ -523,10 +533,14 @@ export class ProductFormComponent implements OnInit {
     this.loadAllProducts();
 
     const id = this.route.snapshot.paramMap.get('id');
+    const duplicateFromId = this.route.snapshot.queryParamMap.get('duplicateFrom');
     if (id) {
       this.isEditMode.set(true);
       this.loading.set(true);
       this.loadProduct(id);
+    } else if (duplicateFromId) {
+      this.loading.set(true);
+      this.loadProductForDuplication(duplicateFromId);
     }
   }
 
@@ -600,6 +614,44 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  /** Pre-fills the form from an existing product so bulk-similar products can be created faster. */
+  private loadProductForDuplication(id: string) {
+    this.productService.getProduct(id).subscribe({
+      next: (res) => {
+        const p = res.data;
+        this.form.patchValue({
+          name: `${p.name} (Copy)`,
+          shortDescription: p.shortDescription,
+          description: p.description,
+          sku: '',
+          brand: p.brand,
+          tags: p.tags,
+          price: p.price,
+          compareAtPrice: p.compareAtPrice,
+          salePrice: p.salePrice,
+          categoryId: p.categoryId,
+          status: ProductStatus.Draft,
+          isFeatured: false,
+          mainImageUrl: p.mainImageUrl
+        });
+
+        p.media.forEach(m => {
+          this.mediaControls.push(this.fb.group({
+            url: [m.url], type: [m.type], altText: [m.altText || ''],
+            thumbnailUrl: [m.thumbnailUrl || ''], sortOrder: [m.sortOrder], isPrimary: [m.isPrimary]
+          }));
+        });
+
+        p.attributes.forEach(a => {
+          this.attributeControls.push(this.fb.group({ name: [a.name], value: [a.value] }));
+        });
+
+        this.loading.set(false);
+      },
+      error: () => this.loading.set(false)
+    });
+  }
+
   private loadCategories() {
     this.productService.getCategories().subscribe({
       next: (res) => this.categories.set(res.data)
@@ -614,6 +666,14 @@ export class ProductFormComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/products']);
+  }
+
+  onCoverImageUploaded(urls: string[]) {
+    if (urls[0]) this.form.patchValue({ mainImageUrl: urls[0] });
+  }
+
+  clearCoverImage() {
+    this.form.patchValue({ mainImageUrl: '' });
   }
 
   save() {
@@ -674,6 +734,15 @@ export class ProductFormComponent implements OnInit {
       url: [''], type: [MediaType.Image], altText: [''], thumbnailUrl: [''],
       sortOrder: [this.mediaControls.length], isPrimary: [this.mediaControls.length === 0]
     }));
+  }
+
+  onMediaImagesUploaded(urls: string[]) {
+    urls.forEach((url, i) => {
+      this.mediaControls.push(this.fb.group({
+        url: [url], type: [MediaType.Image], altText: [''], thumbnailUrl: [''],
+        sortOrder: [this.mediaControls.length], isPrimary: [this.mediaControls.length === 0 && i === 0]
+      }));
+    });
   }
 
   removeMedia(index: number) { this.mediaControls.removeAt(index); }

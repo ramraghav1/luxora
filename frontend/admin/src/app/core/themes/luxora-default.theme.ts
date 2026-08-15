@@ -2,8 +2,8 @@ import { AdminTheme } from './theme.model';
 
 export const luxoraDefaultTheme: AdminTheme = {
   name: 'luxora-default',
-  displayName: 'Luxora Dark',
-  description: 'Premium navy & gold — the classic LUXORA look',
+  displayName: 'LuxePouch Dark',
+  description: 'Premium navy & gold — the classic LuxePouch look',
   preview: { sidebar: '#1a1a2e', accent: '#c9a96e', surface: '#f5f5f7' },
   properties: {
     '--sidebar-bg': '#1a1a2e',

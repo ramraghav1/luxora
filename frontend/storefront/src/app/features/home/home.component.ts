@@ -15,16 +15,17 @@ import { Product, Category } from '@core/models/product.model';
     <!-- HERO SECTION -->
     <section class="hero">
       <div class="hero__bg"></div>
+      <div class="hero__bg-photo"></div>
       <div class="container hero__content">
         <div class="hero__text">
           <span class="hero__badge">
             New Season Collection 2026
           </span>
           <h1 class="hero__title">
-            Elevate Your <span class="hero__highlight">Style</span>
+            Carry Your <span class="hero__highlight">Confidence</span>
           </h1>
           <p class="hero__subtitle">
-            Discover handcrafted luxury bags designed for the modern individual. Premium materials, timeless design.
+            Our style deserves more—discover beautiful bags at irresistible prices.
           </p>
           <div class="hero__actions">
             <a routerLink="/products" class="btn btn--primary btn--lg">Explore Collection</a>
@@ -48,13 +49,13 @@ import { Product, Category } from '@core/models/product.model';
         <div class="hero__visual">
           <div class="hero__image-grid">
             <div class="hero__image-card hero__image-card--1">
-              <img src="https://picsum.photos/seed/hero1/400/520" alt="Luxury Collection" />
+              <img src="/assets/images/black-hobo-bag.png" alt="Black Structured Shoulder Hobo Bag" />
             </div>
             <div class="hero__image-card hero__image-card--2">
-              <img src="https://picsum.photos/seed/hero2/400/460" alt="Premium Bags" />
+              <img src="/assets/images/olive-green-tote-bag.png" alt="Olive Green Structured Tote Bag" />
             </div>
             <div class="hero__image-card hero__image-card--3">
-              <img src="https://picsum.photos/seed/hero3/400/380" alt="Designer Pieces" />
+              <img src="/assets/images/burgundy-barrel-bag.png" alt="Burgundy Chain-Handle Barrel Bag" />
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@ import { Product, Category } from '@core/models/product.model';
         <div class="promo-banner__text">
           <span class="promo-banner__label">Limited Time Offer</span>
           <h2 class="promo-banner__title">Get 20% Off Your First Order</h2>
-          <p class="promo-banner__desc">Join our eco-community and enjoy exclusive member benefits.</p>
+          <p class="promo-banner__desc">Join the LUXEPOUCH circle and enjoy exclusive member perks, early access, and styling edits curated just for you.</p>
           <a routerLink="/auth/register" class="btn btn--accent btn--lg">Join Now & Save</a>
         </div>
         <div class="promo-banner__visual">
@@ -170,49 +171,86 @@ import { Product, Category } from '@core/models/product.model';
       </div>
     </section>
 
-    <!-- ECO IMPACT SECTION -->
-    <section class="eco-section">
+    <!-- WHY CHOOSE US SECTION -->
+    <section class="trust-section">
       <div class="container">
-        <div class="eco-section__content">
-          <div class="eco-section__text">
-            <h2 class="eco-section__title">Our Eco Impact</h2>
-            <p class="eco-section__desc">
-              Every product in our store is carefully selected for its environmental impact.
-              We partner with certified suppliers who share our vision of a sustainable future.
+        <div class="trust-section__content">
+          <div class="trust-section__text">
+            <h2 class="trust-section__title">Why Choose LUXEPOUCH</h2>
+            <p class="trust-section__desc">
+              Every piece we carry is chosen for its craftsmanship, durability and timeless design.
+              Here's what you can always count on when you shop with us.
             </p>
-            <div class="eco-section__features">
-              <div class="eco-feature">
-                <div class="eco-feature__icon">🌍</div>
+            <div class="trust-section__features">
+              <div class="trust-feature">
+                <div class="trust-feature__icon">✦</div>
                 <div>
-                  <h4>Carbon Neutral Shipping</h4>
-                  <p>All deliveries offset 100% of carbon emissions</p>
+                  <h4>Premium Materials</h4>
+                  <p>Full-grain leather and durable hardware built to age beautifully</p>
                 </div>
               </div>
-              <div class="eco-feature">
-                <div class="eco-feature__icon">📦</div>
+              <div class="trust-feature">
+                <div class="trust-feature__icon">🚚</div>
                 <div>
-                  <h4>Plastic-Free Packaging</h4>
-                  <p>Biodegradable materials only — zero plastic waste</p>
+                  <h4>Free Worldwide Shipping</h4>
+                  <p>Every order ships free, no minimum spend required</p>
                 </div>
               </div>
-              <div class="eco-feature">
-                <div class="eco-feature__icon">🌱</div>
+              <div class="trust-feature">
+                <div class="trust-feature__icon">🔒</div>
                 <div>
-                  <h4>One Tree Per Order</h4>
-                  <p>We plant a tree with every purchase you make</p>
+                  <h4>Secure Checkout & Easy Returns</h4>
+                  <p>Encrypted payments plus 30 days to change your mind</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="eco-section__visual">
-            <div class="eco-circle eco-circle--lg">
-              <div class="eco-circle eco-circle--md">
-                <div class="eco-circle eco-circle--sm">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/>
+          <div class="trust-section__visual">
+            <div class="trust-circle trust-circle--lg">
+              <div class="trust-circle trust-circle--md">
+                <div class="trust-circle trust-circle--sm">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                    <path d="M6 8h12l-1 12a2 2 0 01-2 2H9a2 2 0 01-2-2L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/>
                   </svg>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header section__header--center">
+          <span class="section__eyebrow">Testimonials</span>
+          <h2 class="section__title">Loved by Thousands</h2>
+          <p class="section__subtitle">Real words from real LUXEPOUCH customers</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__quote">"The leather quality is incredible for the price. My tote still looks brand new after a year of daily use."</p>
+            <div class="testimonial-card__author">
+              <span class="testimonial-card__name">Amara O.</span>
+              <span class="testimonial-card__role">Verified Buyer</span>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__quote">"Fast shipping, beautiful packaging, and the crossbody bag exceeded every expectation. Already eyeing my next piece."</p>
+            <div class="testimonial-card__author">
+              <span class="testimonial-card__name">Priya S.</span>
+              <span class="testimonial-card__role">Verified Buyer</span>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__quote">"Customer service helped me pick the perfect gift. Elegant design that gets compliments every time I wear it."</p>
+            <div class="testimonial-card__author">
+              <span class="testimonial-card__name">Daniel K.</span>
+              <span class="testimonial-card__role">Verified Buyer</span>
             </div>
           </div>
         </div>
@@ -237,7 +275,7 @@ import { Product, Category } from '@core/models/product.model';
         </div>
         <div class="products-grid">
           @for (product of featuredProducts; track product.id) {
-            <app-product-card [product]="product" badge="eco" />
+            <app-product-card [product]="product" badge="bestseller" />
           }
         </div>
       </div>
@@ -262,6 +300,25 @@ import { Product, Category } from '@core/models/product.model';
       z-index: 0;
     }
 
+    .hero__bg-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-image: url('/assets/images/background1.png');
+      background-size: cover;
+      background-position: left center;
+      opacity: 0.75;
+      -webkit-mask-image: linear-gradient(100deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 34%, rgba(0,0,0,0.35) 50%, transparent 62%);
+      mask-image: linear-gradient(100deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 34%, rgba(0,0,0,0.35) 50%, transparent 62%);
+      animation: heroPhotoDrift 18s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes heroPhotoDrift {
+      0%, 100% { background-position: left center; }
+      50% { background-position: 58% center; }
+    }
+
     .hero__content {
       position: relative;
       z-index: 1;
@@ -269,6 +326,23 @@ import { Product, Category } from '@core/models/product.model';
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: center;
+    }
+
+    .hero__text {
+      position: relative;
+      padding: 2rem 2rem 2rem 0;
+    }
+
+    .hero__text::before {
+      content: '';
+      position: absolute;
+      inset: -1.5rem -1.5rem -1.5rem -3rem;
+      background: linear-gradient(100deg, var(--color-bg) 0%, var(--color-bg) 55%, transparent 100%);
+      opacity: 0.72;
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      z-index: -1;
+      border-radius: var(--radius-xl);
     }
 
     .hero__badge {
@@ -351,10 +425,44 @@ import { Product, Category } from '@core/models/product.model';
     }
 
     .hero__image-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: var(--radius-xl);
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      img { width: 100%; height: 100%; object-fit: cover; }
+      padding: 1.75rem;
+      background:
+        radial-gradient(circle at 50% 42%, var(--color-primary-100) 0%, transparent 65%),
+        linear-gradient(160deg, var(--color-bg-secondary) 0%, var(--color-surface) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow:
+        0 24px 48px -20px rgba(0, 0, 0, 0.22),
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow:
+          0 32px 60px -18px rgba(0, 0, 0, 0.28),
+          0 6px 16px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      }
+
+      img {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 22px 22px rgba(20, 15, 10, 0.22));
+        transition: transform var(--transition-slow);
+      }
+
+      &:hover img {
+        transform: scale(1.045);
+      }
     }
 
     .hero__image-card--1 {
@@ -501,11 +609,19 @@ import { Product, Category } from '@core/models/product.model';
 
     /* ===================== PROMO BANNER ===================== */
     .promo-banner {
-      background: var(--gradient-primary);
+      position: relative;
       padding: 4rem 0;
+      overflow: hidden;
+      background-image: var(--gradient-primary), url('/assets/images/luxepouchbackground.png');
+      background-size: cover, cover;
+      background-position: center, right center;
+      background-repeat: no-repeat, no-repeat;
+      background-blend-mode: soft-light;
     }
 
     .promo-banner__content {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -568,20 +684,20 @@ import { Product, Category } from '@core/models/product.model';
       color: rgba(255,255,255,0.8);
     }
 
-    /* ===================== ECO SECTION ===================== */
-    .eco-section {
+    /* ===================== TRUST SECTION ===================== */
+    .trust-section {
       padding: 5rem 0;
       background: var(--color-bg-tertiary);
     }
 
-    .eco-section__content {
+    .trust-section__content {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 4rem;
       align-items: center;
     }
 
-    .eco-section__title {
+    .trust-section__title {
       font-family: var(--font-display);
       font-size: 2.2rem;
       font-weight: 700;
@@ -589,20 +705,20 @@ import { Product, Category } from '@core/models/product.model';
       margin-bottom: 1rem;
     }
 
-    .eco-section__desc {
+    .trust-section__desc {
       font-size: 1rem;
       color: var(--color-text-secondary);
       line-height: 1.7;
       margin-bottom: 2rem;
     }
 
-    .eco-section__features {
+    .trust-section__features {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .eco-feature {
+    .trust-feature {
       display: flex;
       gap: 1rem;
       align-items: flex-start;
@@ -611,11 +727,12 @@ import { Product, Category } from '@core/models/product.model';
       p { font-size: 0.85rem; color: var(--color-text-muted); }
     }
 
-    .eco-feature__icon {
+    .trust-feature__icon {
       width: 44px;
       height: 44px;
       border-radius: var(--radius-md);
       background: var(--color-primary-100);
+      color: var(--color-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -623,36 +740,86 @@ import { Product, Category } from '@core/models/product.model';
       flex-shrink: 0;
     }
 
-    .eco-section__visual {
+    .trust-section__visual {
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .eco-circle {
+    .trust-circle {
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .eco-circle--lg {
+    .trust-circle--lg {
       width: 280px;
       height: 280px;
       background: var(--color-primary-100);
     }
 
-    .eco-circle--md {
+    .trust-circle--md {
       width: 200px;
       height: 200px;
       background: var(--color-primary-200);
     }
 
-    .eco-circle--sm {
+    .trust-circle--sm {
       width: 120px;
       height: 120px;
       background: var(--color-primary);
       color: var(--color-text-inverse);
+    }
+
+    /* ===================== TESTIMONIALS ===================== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      padding: 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-normal);
+
+      &:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-3px);
+      }
+    }
+
+    .testimonial-card__stars {
+      color: var(--color-accent);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card__quote {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial-card__name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-text);
+    }
+
+    .testimonial-card__role {
+      font-size: 0.78rem;
+      color: var(--color-text-muted);
+      margin-top: 0.15rem;
     }
 
     /* ===================== BUTTONS ===================== */
@@ -709,8 +876,9 @@ import { Product, Category } from '@core/models/product.model';
       .hero__title { font-size: 2.8rem; }
       .products-grid { grid-template-columns: repeat(3, 1fr); }
       .products-grid--featured { grid-template-columns: repeat(3, 1fr); }
-      .eco-section__content { grid-template-columns: 1fr; }
-      .eco-section__visual { display: none; }
+      .trust-section__content { grid-template-columns: 1fr; }
+      .trust-section__visual { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {

@@ -7,11 +7,12 @@ import { ProductService } from '@core/services/product.service';
 import { CategoryService } from '@core/services/category.service';
 import { Product, ProductQueryParams, Category } from '@core/models/product.model';
 import { PagedResult } from '@core/models/api-response.model';
+import { ResolveImageUrlPipe } from '@shared/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ResolveImageUrlPipe],
   template: `
     <div class="product-list-page">
       <!-- Header -->
@@ -93,7 +94,7 @@ import { PagedResult } from '@core/models/api-response.model';
             <div *ngFor="let product of products" class="product-card">
               <a [routerLink]="['/products', product.slug]" class="product-link">
                 <div class="product-image">
-                  <img [src]="product.mainImageUrl || 'assets/images/placeholder.png'"
+                  <img [src]="(product.mainImageUrl | resolveImageUrl) || 'assets/images/placeholder.png'"
                        [alt]="product.name"
                        loading="lazy">
                   <span *ngIf="product.compareAtPrice" class="sale-badge">Sale</span>

@@ -2,12 +2,14 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ProductService, ProductDto, ProductStatus } from './product.service';
+import { ResolveImageUrlPipe } from '../../core/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ResolveImageUrlPipe],
   template: `
     <div class="products">
       <div class="products__header">
@@ -44,10 +46,30 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
             </select>
           </div>
         </div>
+        @if (selectedIds().size > 0) {
+          <div class="bulk-bar">
+            <span class="bulk-bar__count">{{ selectedIds().size }} selected</span>
+            <select class="toolbar__filter" (change)="bulkStatusChange($any($event.target).value); $any($event.target).value = ''">
+              <option value="" disabled selected>Set status to...</option>
+              <option value="0">Draft</option>
+              <option value="1">Active</option>
+              <option value="2">On Sale</option>
+              <option value="3">Out of Stock</option>
+              <option value="4">Discontinued</option>
+            </select>
+            <button class="btn btn--outline btn--xs" (click)="clearSelection()">Clear</button>
+            <button class="btn btn--danger btn--xs" [disabled]="bulkActionInProgress()" (click)="bulkDelete()">
+              @if (bulkActionInProgress()) { Working... } @else { Delete selected }
+            </button>
+          </div>
+        }
         <div class="card__body">
           <table class="table">
             <thead>
               <tr>
+                <th class="table__th--check">
+                  <input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll()">
+                </th>
                 <th>Product</th>
                 <th>SKU</th>
                 <th>Price</th>
@@ -58,10 +80,13 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
             </thead>
             <tbody>
               @for (product of products(); track product.id) {
-                <tr class="table__row">
+                <tr class="table__row" [class.table__row--selected]="isSelected(product.id)">
+                  <td>
+                    <input type="checkbox" [checked]="isSelected(product.id)" (change)="toggleSelect(product.id)">
+                  </td>
                   <td>
                     <div class="product-info">
-                      <img class="product-info__thumb" [src]="product.mainImageUrl || 'https://placehold.co/40x40/f8f9fa/adb5bd?text=N'" alt="">
+                      <img class="product-info__thumb" [src]="(product.mainImageUrl | resolveImageUrl) || 'https://placehold.co/40x40/f8f9fa/adb5bd?text=N'" alt="">
                       <div>
                         <span class="product-info__name">{{ product.name }}</span>
                         @if (product.brand) {
@@ -92,6 +117,9 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
                         <option [value]="3">Out of Stock</option>
                         <option [value]="4">Discontinued</option>
                       </select>
+                      <button class="icon-btn" title="Duplicate" (click)="duplicateProduct(product)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      </button>
                       <button class="icon-btn" title="Edit" (click)="goToEdit(product)">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                       </button>
@@ -103,7 +131,7 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
                 </tr>
               } @empty {
                 <tr>
-                  <td colspan="6" class="table__empty">
+                  <td colspan="7" class="table__empty">
                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
                     <span>No products found</span>
                     <button class="btn btn--primary btn--xs" (click)="goToCreate()">Create your first product</button>
@@ -160,6 +188,18 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
     }
     .btn--sm { padding: 0.5rem 1rem; font-size: 0.78rem; }
     .btn--xs { padding: 0.35rem 0.75rem; font-size: 0.75rem; }
+    .btn--danger {
+      background: var(--error, #ef4444); color: #fff;
+      &:hover { opacity: 0.9; }
+      &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
+    .bulk-bar {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.25rem;
+      background: color-mix(in srgb, var(--accent) 8%, transparent);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .bulk-bar__count { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); margin-right: 0.25rem; }
 
     .icon-btn {
       width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
@@ -205,11 +245,13 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
       text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); background: var(--content-bg);
     }
     .table__th--right { text-align: right; }
+    .table__th--check { width: 36px; }
     .table td {
       padding: 0.75rem 1.25rem; font-size: 0.82rem; color: var(--text-secondary);
       border-top: 1px solid var(--border-light); vertical-align: middle;
     }
     .table__row { transition: background 0.15s; &:hover { background: var(--content-bg); } }
+    .table__row--selected { background: color-mix(in srgb, var(--accent) 6%, transparent); }
 
     .product-info { display: flex; align-items: center; gap: 0.75rem; }
     .product-info__thumb {
@@ -255,6 +297,7 @@ import { ProductService, ProductDto, ProductStatus } from './product.service';
 export class ProductListComponent implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
+  private searchDebounceTimer?: ReturnType<typeof setTimeout>;
 
   products = signal<ProductDto[]>([]);
   totalCount = signal(0);
@@ -262,6 +305,8 @@ export class ProductListComponent implements OnInit {
   totalPages = signal(1);
   searchTerm = signal('');
   statusFilter = signal<string>('');
+  selectedIds = signal<Set<string>>(new Set());
+  bulkActionInProgress = signal(false);
 
   ngOnInit() {
     this.loadProducts();
@@ -277,14 +322,18 @@ export class ProductListComponent implements OnInit {
         this.products.set(res.data.items);
         this.totalCount.set(res.data.totalCount);
         this.totalPages.set(res.data.totalPages);
+        this.selectedIds.set(new Set());
       }
     });
   }
 
   onSearch(term: string) {
     this.searchTerm.set(term);
-    this.currentPage.set(1);
-    this.loadProducts();
+    clearTimeout(this.searchDebounceTimer);
+    this.searchDebounceTimer = setTimeout(() => {
+      this.currentPage.set(1);
+      this.loadProducts();
+    }, 300);
   }
 
   onStatusFilter(status: string) {
@@ -306,6 +355,10 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/products', product.id, 'edit']);
   }
 
+  duplicateProduct(product: ProductDto) {
+    this.router.navigate(['/products', 'new'], { queryParams: { duplicateFrom: product.id } });
+  }
+
   deleteProduct(product: ProductDto) {
     if (!confirm(`Delete "${product.name}"? This action cannot be undone.`)) return;
     this.productService.deleteProduct(product.id).subscribe({
@@ -316,6 +369,69 @@ export class ProductListComponent implements OnInit {
   quickStatusChange(product: ProductDto, status: string) {
     this.productService.updateStatus(product.id, { status: parseInt(status) as ProductStatus }).subscribe({
       next: () => this.loadProducts()
+    });
+  }
+
+  // Selection & bulk actions
+  isSelected(id: string): boolean {
+    return this.selectedIds().has(id);
+  }
+
+  allSelected(): boolean {
+    return this.products().length > 0 && this.products().every(p => this.selectedIds().has(p.id));
+  }
+
+  toggleSelect(id: string) {
+    const next = new Set(this.selectedIds());
+    next.has(id) ? next.delete(id) : next.add(id);
+    this.selectedIds.set(next);
+  }
+
+  toggleSelectAll() {
+    if (this.allSelected()) {
+      this.selectedIds.set(new Set());
+    } else {
+      this.selectedIds.set(new Set(this.products().map(p => p.id)));
+    }
+  }
+
+  clearSelection() {
+    this.selectedIds.set(new Set());
+  }
+
+  bulkDelete() {
+    const ids = Array.from(this.selectedIds());
+    if (ids.length === 0) return;
+    if (!confirm(`Delete ${ids.length} selected product${ids.length > 1 ? 's' : ''}? This action cannot be undone.`)) return;
+
+    this.bulkActionInProgress.set(true);
+    forkJoin(ids.map(id => this.productService.deleteProduct(id))).subscribe({
+      next: () => {
+        this.bulkActionInProgress.set(false);
+        this.loadProducts();
+      },
+      error: () => {
+        this.bulkActionInProgress.set(false);
+        this.loadProducts();
+      }
+    });
+  }
+
+  bulkStatusChange(statusValue: string) {
+    const ids = Array.from(this.selectedIds());
+    if (!statusValue || ids.length === 0) return;
+    const status = parseInt(statusValue) as ProductStatus;
+
+    this.bulkActionInProgress.set(true);
+    forkJoin(ids.map(id => this.productService.updateStatus(id, { status }))).subscribe({
+      next: () => {
+        this.bulkActionInProgress.set(false);
+        this.loadProducts();
+      },
+      error: () => {
+        this.bulkActionInProgress.set(false);
+        this.loadProducts();
+      }
     });
   }
 

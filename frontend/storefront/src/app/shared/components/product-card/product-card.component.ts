@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Product } from '@core/models/product.model';
 import { CartService } from '@core/services/cart.service';
+import { ResolveImageUrlPipe } from '@shared/pipes/resolve-image-url.pipe';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ResolveImageUrlPipe],
   template: `
     <article class="product-card" [class.product-card--featured]="featured">
       <a [routerLink]="['/products', product.slug]" class="product-card__link">
         <div class="product-card__image-wrap">
           <img
-            [src]="product.mainImageUrl || 'https://placehold.co/400x500/e8f5e9/2d6a4f?text=' + product.name"
+            [src]="(product.mainImageUrl | resolveImageUrl) || 'https://placehold.co/400x500/e8f5e9/2d6a4f?text=' + product.name"
             [alt]="product.name"
             class="product-card__image"
             loading="lazy"
@@ -122,7 +123,7 @@ import { CartService } from '@core/services/cart.service';
     .badge--new { background: var(--color-badge-new); }
     .badge--sale { background: var(--color-badge-sale); }
     .badge--premium { background: var(--color-badge-premium); }
-    .badge--eco { background: var(--color-badge-eco); }
+    .badge--bestseller { background: var(--color-primary); }
 
     .product-card__overlay {
       position: absolute;
@@ -216,7 +217,7 @@ export class ProductCardComponent {
   private readonly cartService = inject(CartService);
 
   @Input({ required: true }) product!: Product;
-  @Input() badge?: 'new' | 'sale' | 'premium' | 'eco';
+  @Input() badge?: 'new' | 'sale' | 'premium' | 'bestseller';
   @Input() featured = false;
 
   get badgeLabel(): string {
@@ -224,7 +225,7 @@ export class ProductCardComponent {
       new: 'New',
       sale: 'Sale',
       premium: 'Premium',
-      eco: 'Eco'
+      bestseller: 'Bestseller'
     };
     return labels[this.badge ?? ''] ?? '';
   }

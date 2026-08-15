@@ -158,6 +158,12 @@ export interface ProductQueryParams {
   sortDirection?: string;
 }
 
+export interface UploadImageResponse {
+  url: string;
+  fileName: string;
+  sizeInBytes: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private http = inject(HttpClient);
@@ -197,5 +203,11 @@ export class ProductService {
 
   getCategories(): Observable<ApiResponse<CategoryDto[]>> {
     return this.http.get<ApiResponse<CategoryDto[]>>(`${environment.apiUrl}/categories`);
+  }
+
+  uploadImage(file: File): Observable<ApiResponse<UploadImageResponse>> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<ApiResponse<UploadImageResponse>>(`${this.baseUrl}/images`, formData);
   }
 }
